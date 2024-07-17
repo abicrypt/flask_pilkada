@@ -29,3 +29,36 @@ Aplikasi ini digunakan untuk perhitungan suara dalam Pilkada.
 ## Deployment
 - Konfigurasi server dan database
 - Deploy aplikasi menggunakan WSGI server seperti Gunicorn
+
+## Persiapan Lingkungan Pengembangan
+
+Sebelum menjalankan aplikasi, pastikan Anda telah mengatur lingkungan virtual Python. Ikuti langkah-langkah berikut:
+
+1. Buka terminal atau command prompt.
+
+2. Navigasi ke direktori proyek:
+   ```
+   cd path/ke/direktori/proyek
+   ```
+
+3. Buat lingkungan virtual:
+   ```
+   python -m venv env
+   ```
+
+4. Aktifkan lingkungan virtual:
+   - Untuk Windows:
+     ```
+     env\Scripts\activate
+     ```
+   - Untuk macOS dan Linux:
+     ```
+     source env/bin/activate
+     ```
+
+5. Setelah lingkungan virtual aktif, install dependensi yang diperlukan:
+   ```
+   pip install -r requirements.txt
+   ```
+
+Sekarang lingkungan pengembangan Anda siap untuk menjalankan aplikasi.
