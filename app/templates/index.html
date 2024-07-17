@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Hasil Perhitungan Suara Sementara</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Di sini akan ditambahkan grafik hasil suara -->
+                    <canvas id="hasilSuaraChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Progres Perhitungan</h5>
+                </div>
+                <div class="card-body">
+                    <h2 class="text-center">65.5%</h2>
+                    <p class="text-center">TPS yang telah mengirimkan data</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Informasi Pemilihan</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Tanggal Pemilihan:</strong> 14 Februari 2024</p>
+                    <p><strong>Jumlah TPS:</strong> 1000</p>
+                    <p><strong>Jumlah Pemilih Terdaftar:</strong> 500,000</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Kode untuk membuat grafik hasil suara
+    var ctx = document.getElementById('hasilSuaraChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Kandidat 1', 'Kandidat 2', 'Kandidat 3'],
+            datasets: [{
+                label: 'Jumlah Suara',
+                data: [12000, 19000, 3000],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

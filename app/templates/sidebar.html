@@ -1,0 +1,52 @@
+{% if current_user.is_authenticated %}
+<div class="wrapper">
+  <!-- Sidebar -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <h3>Menu</h3>
+    </div>
+
+    <ul class="list-unstyled components">
+      <li>
+        <a href="{{ url_for('auth.index') }}"><i class="fas fa-home"></i> Beranda</a>
+      </li>
+      <li>
+        <a href="{{ url_for('auth.hasil_perhitungan') }}"><i class="fas fa-chart-bar"></i> Hasil Perhitungan</a>
+      </li>
+      <li>
+        <a href="{{ url_for('auth.profile', username=current_user.username) }}"><i class="fas fa-user"></i> Profil</a>
+      </li>
+      {% if current_user.has_role('admin') %}
+        <li>
+          <a href="{{ url_for('auth.data_pemilih') }}"><i class="fas fa-users"></i> Data Pemilih</a>
+        </li>
+        <li>
+          <a href="{{ url_for('auth.informasi_tps') }}"><i class="fas fa-info-circle"></i> Informasi TPS</a>
+        </li>
+      {% endif %}
+      <li>
+        <a href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Page Content -->
+  <div id="content">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <button type="button" id="sidebarCollapse" class="btn btn-info">
+          <i class="fas fa-align-left"></i>
+          <span>Toggle Sidebar</span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="container">
+      {{ render_messages() }}
+      {% block app_content %}{% endblock %}
+    </div>
+  </div>
+</div>
+{% else %}
+{% include 'navbar.html' %}
+{% endif %}

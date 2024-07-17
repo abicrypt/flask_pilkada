@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<div class="container mt-5">
+    <h1>Informasi TPS</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Daftar TPS</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Nama TPS</th>
+                                <th>Alamat</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>TPS 1</td>
+                                <td>Jl. Jend. Sudirman No. 1</td>
+                                <td>Online</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>TPS 2</td>
+                                <td>Jl. Gatot Subroto No. 2</td>
+                                <td>Offline</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>TPS 3</td>
+                                <td>Jl. H.R. Rasuna Said No. 3</td>
+                                <td>Online</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Peta TPS</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Tambahkan peta TPS di sini -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

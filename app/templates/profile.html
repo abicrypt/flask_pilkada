@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{ url_for('static', filename='images/profile_pictures/' + user.profile.profile_picture) if user.profile.profile_picture else url_for('static', filename='default_profile.jpg') }}" class="card-img-top" alt="{{ user.username }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ user.username }}</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Nama Lengkap:</strong> {{ user.profile.full_name or 'Belum diisi' }}</li>
+                    <li class="list-group-item"><strong>NIK:</strong> {{ user.profile.NIK or 'Belum diisi' }}</li>
+                    <li class="list-group-item"><strong>WhatsApp:</strong> {{ user.profile.no_WA or 'Belum diisi' }}</li>
+                    <li class="list-group-item"><strong>Telepon/HP:</strong> {{ user.profile.no_telp_hp or 'Belum diisi' }}</li>
+                    <li class="list-group-item"><strong>Telegram:</strong> {{ user.profile.telegram or 'Belum diisi' }}</li>
+                    <li class="list-group-item"><strong>Alamat:</strong> {{ user.profile.alamat or 'Belum diisi' }}</li>
+                    <li class="list-group-item"><strong>Tanggal Lahir:</strong> {{ user.profile.birth_date or 'Belum diisi' }}</li>
+                </ul>
+                {% if current_user.id == user.id %}
+                <div class="card-body">
+                    <a href="{{ url_for('auth.edit_profile') }}" class="btn btn-primary">Edit Profil</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-8">
+            <!-- Tambahkan konten tambahan di sini, seperti aktivitas pengguna atau statistik -->
+        </div>
+    </div>
+</div>
+{% endblock %}

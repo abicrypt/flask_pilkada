@@ -25,3 +25,6 @@ __pycache__/
 # File sistem operasi
 .DS_Store
 Thumbs.db
+
+# Folder gambar profil
+app/static/images/profile_pictures/
