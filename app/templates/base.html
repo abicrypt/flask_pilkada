@@ -13,14 +13,25 @@
         <!-- Bootstrap CSS -->
         {{ bootstrap.load_css() }}
         <style>
-            .jumbotron {
-                background-color: #f8f9fa;
+            body {
+                background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
+                font-family: 'Poppins', sans-serif;
             }
-            .wrapper {
-                display: flex;
-                width: 100%;
+            .glassmorphism {
+                background: rgba(255, 255, 255, 0.25);
+                box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+                backdrop-filter: blur(4px);
+                -webkit-backdrop-filter: blur(4px);
+                border-radius: 10px;
+                border: 1px solid rgba(255, 255, 255, 0.18);
             }
-
+            .navbar {
+                background: rgba(255, 255, 255, 0.1) !important;
+            }
+            .card {
+                background: rgba(255, 255, 255, 0.1);
+                border: none;
+            }
             #sidebar {
                 width: 250px;
                 position: fixed;
@@ -28,7 +39,7 @@
                 left: 0;
                 height: calc(100vh - 56px);
                 z-index: 999;
-                background: #7386D5;
+                background: rgba(25, 25, 112, 0.8); /* Warna biru tua dengan sedikit transparansi */
                 color: #fff;
                 transition: all 0.3s;
             }
@@ -60,13 +71,13 @@
 
             #sidebarCollapse {
                 background: transparent;
-                color: #fff;
+                color: #ffd700; /* Warna kuning emas untuk tombol collapse */
                 border: none;
                 font-size: 1.5em;
             }
 
             #sidebarCollapse:hover {
-                color: #7386D5;
+                color: #ffffff;
             }
 
             #sidebar.active {
@@ -76,6 +87,61 @@
             body.sidebar-active #content {
                 margin-left: 0;
             }
+
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            .fade-in {
+                animation: fadeIn 0.5s ease-in;
+            }
+
+            #sidebar {
+                width: 250px;
+                transition: all 0.3s;
+            }
+
+            #sidebar.minimized {
+                width: 60px;
+            }
+
+            #sidebar .nav-link {
+                white-space: nowrap;
+                overflow: hidden;
+                color: #ffffff;
+                transition: all 0.3s;
+            }
+
+            #sidebar.minimized .nav-link span {
+                display: none;
+            }
+
+            #sidebar.minimized .sidebar-header h3 {
+                display: none;
+            }
+
+            #content {
+                margin-left: 250px;
+                transition: all 0.3s;
+            }
+
+            body.sidebar-minimized #content {
+                margin-left: 60px;
+            }
+
+            #sidebar .nav-link:hover {
+                color: #ffd700; /* Warna kuning emas saat hover */
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            #sidebar .nav-link i {
+                margin-right: 10px;
+                color: #ffffff; /* Ubah warna ikon menjadi putih */
+            }
+
+            #sidebar .sidebar-header h3 {
+                color: #ffffff; /* Ubah warna judul sidebar menjadi putih */
+            }
         </style>
     {% endblock %}
 
@@ -83,9 +149,9 @@
     {% endblock %}
   </head>
   <body class="d-flex flex-column min-vh-100">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light glassmorphism">
       <div class="container">
-        <a class="navbar-brand" href="{{ url_for('auth.index') }}">Sistem Pemilu</a>
+        <a class="navbar-brand text-white" href="{{ url_for('auth.index') }}">Sistem Pemilu</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -136,20 +202,20 @@
           </div>
           <ul class="list-unstyled components">
             <li>
-              <a href="{{ url_for('auth.index') }}"><i class="fas fa-home"></i> Beranda</a>
+              <a href="{{ url_for('auth.index') }}"><i class="fas fa-home"></i> <span>Beranda</span></a>
             </li>
             <li>
-              <a href="{{ url_for('auth.hasil_perhitungan') }}"><i class="fas fa-chart-bar"></i> Hasil Perhitungan</a>
+              <a href="{{ url_for('auth.hasil_perhitungan') }}"><i class="fas fa-chart-bar"></i> <span>Hasil Perhitungan</span></a>
             </li>
             <li>
-              <a href="{{ url_for('auth.profile', username=current_user.username) }}"><i class="fas fa-user"></i> Profil</a>
+              <a href="{{ url_for('auth.profile', username=current_user.username) }}"><i class="fas fa-user"></i> <span>Profil</span></a>
             </li>
             {% if current_user.has_role('admin') %}
               <li>
-                <a href="{{ url_for('auth.data_pemilih') }}"><i class="fas fa-users"></i> Data Pemilih</a>
+                <a href="{{ url_for('auth.data_pemilih') }}"><i class="fas fa-users"></i> <span>Data Pemilih</span></a>
               </li>
               <li>
-                <a href="{{ url_for('auth.informasi_tps') }}"><i class="fas fa-info-circle"></i> Informasi TPS</a>
+                <a href="{{ url_for('auth.informasi_tps') }}"><i class="fas fa-info-circle"></i> <span>Informasi TPS</span></a>
               </li>
             {% endif %}
           </ul>
@@ -176,8 +242,8 @@
         <script>
           $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
-              $('#sidebar').toggleClass('active');
-              $('body').toggleClass('sidebar-active');
+              $('#sidebar').toggleClass('minimized');
+              $('body').toggleClass('sidebar-minimized');
               $(this).find('i').toggleClass('fa-bars fa-times');
             });
           });
