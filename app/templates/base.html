@@ -3,86 +3,139 @@
 <html lang="en">
   <head>
     {% block head %}
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <title>{% block title %}Sistem Pemilu{% endblock %}</title>
 
     {% block styles %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <!-- Bootstrap CSS -->
-        {{ bootstrap.load_css() }}
-        <style>
-            :root {
-                --primary-color: #e74c3c;
-                --secondary-color: #ffffff;
-                --accent-color: #ffd700;
-                --background-color: #f0f0f0;
-            }
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    {{ bootstrap.load_css() }}
+    <style>
+      :root {
+        --primary-color: #e74c3c;
+        --secondary-color: #ffffff;
+        --accent-color: #ffd700;
+        --background-color: #f0f0f0;
+      }
 
-            body {
-                background: var(--background-color);
-                color: var(--primary-color);
-            }
+      body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        color: var(--primary-color);
+        font-family: 'Roboto', sans-serif;
+      }
 
-            .navbar {
-                background-color: var(--primary-color) !important;
-            }
+      .navbar {
+        background-color: rgba(231, 76, 60, 0.9) !important;
+        backdrop-filter: blur(10px);
+      }
 
-            .navbar-light .navbar-nav .nav-link {
-                color: var(--secondary-color);
-            }
+      .navbar-light .navbar-nav .nav-link {
+        color: var(--secondary-color);
+        transition: all 0.3s ease;
+      }
 
-            .btn-primary {
-                background-color: var(--primary-color);
-                border-color: var(--primary-color);
-            }
+      .navbar-light .navbar-nav .nav-link:hover {
+        color: var(--accent-color) !important;
+        transform: translateY(-2px);
+      }
 
-            .btn-primary:hover {
-                background-color: var(--accent-color);
-                border-color: var(--accent-color);
-            }
+      .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        transition: all 0.3s ease;
+      }
 
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            .fade-in {
-                animation: fadeIn 0.5s ease-in;
-            }
+      .btn-primary:hover {
+        background-color: var(--accent-color);
+        border-color: var(--accent-color);
+        transform: scale(1.05);
+      }
 
-            .nav-link {
-                transition: color 0.3s ease;
-            }
+      .card {
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
 
-            .nav-link:hover {
-                color: var(--accent-color) !important;
-            }
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+      }
 
-            @media (max-width: 768px) {
-                #sidebar {
-                    margin-left: -250px;
-                }
-                #sidebar.active {
-                    margin-left: 0;
-                }
-                #content {
-                    width: 100%;
-                }
-                #content.active {
-                    margin-left: 250px;
-                }
-            }
-        </style>
+      #sidebar {
+        min-width: 250px;
+        max-width: 250px;
+        background: #343a40;
+        color: #fff;
+        transition: all 0.3s;
+      }
+
+      #sidebar.active {
+        margin-left: -250px;
+      }
+
+      #sidebar .sidebar-header {
+        padding: 20px;
+        background: #2c3e50;
+      }
+
+      #sidebar ul.components {
+        padding: 20px 0;
+        border-bottom: 1px solid #47748b;
+      }
+
+      #sidebar ul p {
+        color: #fff;
+        padding: 10px;
+      }
+
+      #sidebar ul li a {
+        padding: 10px;
+        font-size: 1.1em;
+        display: block;
+        color: #fff;
+        transition: all 0.3s ease;
+      }
+
+      #sidebar ul li a:hover {
+        color: #7386D5;
+        background: #fff;
+      }
+
+      @media (max-width: 768px) {
+        #sidebar {
+          margin-left: -250px;
+        }
+        #sidebar.active {
+          margin-left: 0;
+        }
+        #content {
+          width: 100%;
+        }
+        #content.active {
+          width: calc(100% - 250px);
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 0.5s ease-in;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    </style>
     {% endblock %}
-
-    <title>{% block title %}Your App Title{% endblock %}</title>
     {% endblock %}
   </head>
   <body class="d-flex flex-column min-vh-100">
-    <nav class="navbar navbar-expand-lg navbar-light glassmorphism">
+    <nav class="navbar navbar-expand-lg navbar-light">
       <div class="container">
-        <a class="navbar-brand text-white" href="{{ url_for('auth.index') }}">Sistem Pemilu</a>
+        <a class="navbar-brand text-white" href="{{ url_for('auth.index') }}">
+          <i class="fas fa-vote-yea me-2"></i>Sistem Pemilu
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -90,31 +143,31 @@
           <ul class="navbar-nav ms-auto">
             {% if current_user.is_authenticated %}
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('auth.index') }}"><i class="fas fa-home"></i> Beranda</a>
+                <a class="nav-link" href="{{ url_for('auth.index') }}"><i class="fas fa-home me-1"></i>Beranda</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('auth.hasil_perhitungan') }}"><i class="fas fa-chart-bar"></i> Hasil Perhitungan</a>
+                <a class="nav-link" href="{{ url_for('auth.hasil_perhitungan') }}"><i class="fas fa-chart-bar me-1"></i>Hasil Perhitungan</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('auth.profile', username=current_user.username) }}"><i class="fas fa-user"></i> Profil</a>
+                <a class="nav-link" href="{{ url_for('auth.profile', username=current_user.username) }}"><i class="fas fa-user me-1"></i>Profil</a>
               </li>
               {% if current_user.has_role('admin') %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ url_for('auth.data_pemilih') }}">Data Pemilih</a>
+                  <a class="nav-link" href="{{ url_for('auth.data_pemilih') }}"><i class="fas fa-users me-1"></i>Data Pemilih</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ url_for('auth.informasi_tps') }}">Informasi TPS</a>
+                  <a class="nav-link" href="{{ url_for('auth.informasi_tps') }}"><i class="fas fa-info-circle me-1"></i>Informasi TPS</a>
                 </li>
               {% endif %}
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+                <a class="nav-link" href="{{ url_for('auth.logout') }}"><i class="fas fa-sign-out-alt me-1"></i>Logout</a>
               </li>
             {% else %}
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+                <a class="nav-link" href="{{ url_for('auth.login') }}"><i class="fas fa-sign-in-alt me-1"></i>Login</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
+                <a class="nav-link" href="{{ url_for('auth.register') }}"><i class="fas fa-user-plus me-1"></i>Register</a>
               </li>
             {% endif %}
           </ul>
@@ -122,59 +175,57 @@
       </div>
     </nav>
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ url_for('auth.index') }}">Beranda</a></li>
-            {% block breadcrumb %}{% endblock %}
-        </ol>
-    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        {% if current_user.is_authenticated %}
+          <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+            <div class="position-sticky">
+              <ul class="nav flex-column">
+                <li class="nav-item">
+                  <a class="nav-link active" href="{{ url_for('auth.index') }}">
+                    <i class="fas fa-home me-2"></i>
+                    <span>Beranda</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('auth.hasil_perhitungan') }}">
+                    <i class="fas fa-chart-bar me-2"></i>
+                    <span>Hasil Perhitungan</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('auth.profile', username=current_user.username) }}">
+                    <i class="fas fa-user me-2"></i>
+                    <span>Profil</span>
+                  </a>
+                </li>
+                {% if current_user.has_role('admin') %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('auth.data_pemilih') }}">
+                      <i class="fas fa-users me-2"></i>
+                      <span>Data Pemilih</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('auth.informasi_tps') }}">
+                      <i class="fas fa-info-circle me-2"></i>
+                      <span>Informasi TPS</span>
+                    </a>
+                  </li>
+                {% endif %}
+              </ul>
+            </div>
+          </nav>
+        {% endif %}
 
-    {% if current_user.is_authenticated %}
-      <div class="wrapper">
-        <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-          <div class="position-sticky">
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <a class="nav-link active" href="{{ url_for('auth.index') }}">
-                  <i class="fas fa-home"></i>
-                  <span>Beranda</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('auth.hasil_perhitungan') }}">
-                  <i class="fas fa-chart-bar"></i>
-                  <span>Hasil Perhitungan</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('auth.profile', username=current_user.username) }}">
-                  <i class="fas fa-user"></i>
-                  <span>Profil</span>
-                </a>
-              </li>
-              {% if current_user.has_role('admin') %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ url_for('auth.data_pemilih') }}">
-                    <i class="fas fa-users"></i>
-                    <span>Data Pemilih</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ url_for('auth.informasi_tps') }}">
-                    <i class="fas fa-info-circle"></i>
-                    <span>Informasi TPS</span>
-                  </a>
-                </li>
-              {% endif %}
-            </ul>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">{% block page_title %}{% endblock %}</h1>
           </div>
-        </nav>
+          {{ render_messages() }}
+          {% block app_content %}{% endblock %}
+        </main>
       </div>
-    {% endif %}
-
-    <div id="content">
-      {{ render_messages() }}
-      {% block app_content %}{% endblock %}
     </div>
 
     <footer class="footer mt-auto py-3 bg-light">
@@ -184,59 +235,54 @@
     </footer>
 
     {% block scripts %}
-        <!-- Optional JavaScript -->
-        {{ bootstrap.load_js() }}
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-        <script>
-          $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-              $('#sidebar').toggleClass('minimized');
-              $('body').toggleClass('sidebar-minimized');
-              $(this).find('i').toggleClass('fa-bars fa-times');
-            });
-          });
+    {{ bootstrap.load_js() }}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+          $('#sidebar').toggleClass('active');
+          $('body').toggleClass('sidebar-active');
+        });
+      });
 
-          document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM fully loaded and parsed');
-            const form = document.querySelector('form');
-            if (form) {
-              form.addEventListener('submit', function(e) {
-                console.log('Form submitted');
-              });
-            }
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM fully loaded and parsed');
+        const form = document.querySelector('form');
+        if (form) {
+          form.addEventListener('submit', function(e) {
+            console.log('Form submitted');
           });
-        </script>
+        }
+      });
+
+      function showConfirmationModal(action) {
+        var modal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+        modal.show();
+        document.getElementById('confirmAction').onclick = function() {
+          action();
+          modal.hide();
+        };
+      }
+    </script>
     {% endblock %}
 
-    <!-- Modal -->
     <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmationModalLabel">Konfirmasi</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Apakah Anda yakin ingin melakukan tindakan ini?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-primary" id="confirmAction">Ya, Lanjutkan</button>
-                </div>
-            </div>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmationModalLabel">Konfirmasi</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Apakah Anda yakin ingin melakukan tindakan ini?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+            <button type="button" class="btn btn-primary" id="confirmAction">Ya, Lanjutkan</button>
+          </div>
         </div>
+      </div>
     </div>
-
-    <script>
-        function showConfirmationModal(action) {
-            var modal = new bootstrap.Modal(document.getElementById('confirmationModal'));
-            modal.show();
-            document.getElementById('confirmAction').onclick = function() {
-                action();
-                modal.hide();
-            };
-        }
-    </script>
   </body>
 </html>
