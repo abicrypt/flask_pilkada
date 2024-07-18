@@ -4,7 +4,7 @@
 <div class="container mt-5 fade-in">
     <div class="row">
         <div class="col-md-8">
-            <div class="card mb-4">
+            <div class="card mb-4 shadow-sm">
                 <div class="card-header bg-primary text-white">
                     <h5 class="mb-0">Hasil Perhitungan Suara Sementara</h5>
                 </div>
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card mb-4">
+            <div class="card mb-4 shadow-sm">
                 <div class="card-header bg-success text-white">
                     <h5 class="mb-0">Progres Perhitungan</h5>
                 </div>
@@ -43,7 +43,6 @@
 {{ super() }}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Kode untuk membuat grafik hasil suara
     var ctx = document.getElementById('hasilSuaraChart').getContext('2d');
     var chart = new Chart(ctx, {
         type: 'bar',
